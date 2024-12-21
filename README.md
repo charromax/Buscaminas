@@ -1,14 +1,37 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
+# KBuscaminas
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+KBuscaminas is a Compose Multiplatform app targeting *Android*, *IOS* and *Desktop*;  
+inspired by the classic Minesweeper game. 
+The project is modularized by feature and follows Clean Architecture principles to ensure 
+scalability and maintainability. Credits to [KotLearn](https://www.youtube.com/@Kotlearn) for this
+amazing course.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Project Structure
 
+The app is divided into modules to promote separation of concerns:
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+- **App Layer**: `:composeApp`
+- **UI Layer**: `:ui:core`
+- **Data Layer**: `:data:core`, `:data:game`, `:data:settings`
+- **Domain Layer**: `:domain:game`, `:domain:settings`
+- **Feature Modules**: `:feature:settings`, `:feature:play`, `:feature:menu`, `:feature:highscore`
+
+## Tech Stack
+
+- **Compose Multiplatform**: Modern UI development for Android and other platforms.
+- **Kotlin Multiplatform**: Shared logic and models.
+- **Dependency Injection**: [Koin](https://insert-koin.io/)
+- **Database**: Room and SQLite.
+- **State Management**: Jetpack Compose and AndroidX Lifecycle.
+- **Testing**: MockK and Kotest.
+
+## Key Versions
+
+- Kotlin: `2.0.21`
+- Compose: `1.7.0`
+- Koin: `4.0.0`
+- Room: `2.7.0-alpha11`
+- MockK: `1.13.13`
+- Kotest: `5.9.1`
+- Android Compile SDK: `35`
+- Minimum SDK: `24`
