@@ -3,9 +3,7 @@ package com.example.project.feature.play
 import TileState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -19,10 +17,12 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import buscaminas.feature.play.generated.resources.Res
 import buscaminas.feature.play.generated.resources.mine
 import com.example.project.ui.core.MinesweeperColorScheme
 import org.jetbrains.compose.resources.vectorResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun Tile(
@@ -142,3 +142,33 @@ private fun Modifier.hiddenTile(
         color = borderDark
     )
 }
+
+@Composable
+@Preview
+@OptIn(ExperimentalLayoutApi::class)
+fun TilePreview() {
+    val states = getAllTileStates()
+    FlowRow {
+        states.forEach {
+            Tile(
+                state = it,
+                modifier = Modifier.size(32.dp),
+                revealedBorderWidth = 2.dp,
+                hiddenBorderWidth = 4.dp
+            )
+        }
+    }
+}
+private fun getAllTileStates(): Set<TileState> = setOf(
+    TileState.Hidden(true),
+    TileState.Hidden(false),
+    TileState.Revealed.Mine,
+    TileState.Revealed.Number(1),
+    TileState.Revealed.Number(2),
+    TileState.Revealed.Number(3),
+    TileState.Revealed.Number(4),
+    TileState.Revealed.Number(5),
+    TileState.Revealed.Number(6),
+    TileState.Revealed.Number(7),
+    TileState.Revealed.Number(8),
+)

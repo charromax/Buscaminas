@@ -1,21 +1,14 @@
 package com.example.project.feature.play
 
 import TileState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MinesweeperBoard(
@@ -76,4 +69,39 @@ fun MinesweeperBoard(
             }
         }
     }
+}
+
+private fun getAllTileStates(): Set<TileState> = setOf(
+    TileState.Hidden(true),
+    TileState.Hidden(false),
+    TileState.Revealed.Mine,
+    TileState.Revealed.Number(1),
+    TileState.Revealed.Number(2),
+    TileState.Revealed.Number(3),
+    TileState.Revealed.Number(4),
+    TileState.Revealed.Number(5),
+    TileState.Revealed.Number(6),
+    TileState.Revealed.Number(7),
+    TileState.Revealed.Number(8),
+)
+
+@Composable
+@Preview
+fun BoardPreview() {
+    val states = getAllTileStates()
+    val tileStates = buildList {
+        repeat(10) {
+            add(
+                buildList {
+                    repeat(6) {
+                        add(states.random())
+                    }
+                }
+            )
+        }
+    }
+    MinesweeperBoard(
+        tileStates = tileStates,
+        modifier = Modifier.fillMaxSize()
+    )
 }
