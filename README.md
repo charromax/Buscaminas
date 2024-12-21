@@ -25,13 +25,5 @@ The app is divided into modules to promote separation of concerns:
 - **State Management**: Jetpack Compose and AndroidX Lifecycle.
 - **Testing**: MockK and Kotest.
 
-## Key Versions
-
-- Kotlin: `2.0.21`
-- Compose: `1.7.0`
-- Koin: `4.0.0`
-- Room: `2.7.0-alpha11`
-- MockK: `1.13.13`
-- Kotest: `5.9.1`
-- Android Compile SDK: `35`
-- Minimum SDK: `24`
+## Screenshots
+<img width="333" alt="image" src="https://github.com/user-attachments/assets/955eb915-2628-4352-812c-af36189c2c96" />
