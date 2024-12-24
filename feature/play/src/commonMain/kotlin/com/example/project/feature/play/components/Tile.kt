@@ -159,6 +159,7 @@ fun TilePreview() {
         }
     }
 }
+
 private fun getAllTileStates(): Set<TileState> = setOf(
     TileState.Hidden(true),
     TileState.Hidden(false),
