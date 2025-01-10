@@ -33,6 +33,8 @@ kotlin {
             // Koin
             implementation(libs.koin.core)
             implementation(libs.bundles.koin.compose)
+            // Datastore
+            implementation(libs.datastore.preferences.core)
         }
     }
 }

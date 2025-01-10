@@ -1,0 +1,41 @@
+package com.example.project.data.core.storage
+
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+class DataStoreStorage(
+    private val dataStore: DataStore<Preferences>
+) : Storage {
+    override fun <T> getAsFlow(key: Storage.Key<T>): Flow<T?> = dataStore
+        .data
+        .map { prefs ->
+            prefs[getDataStoreKey(key)]
+        }
+
+
+    override suspend fun <T> get(key: Storage.Key<T>): T? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun <T> write(key: Storage.Key<T>, value: T?) {
+        TODO("Not yet implemented")
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T> getDataStoreKey(key: Storage.Key<T>): Preferences.Key<T> = when (key) {
+        is Storage.Key.BooleanKey -> booleanPreferencesKey(key.name)
+        is Storage.Key.DoubleKey -> doublePreferencesKey(key.name)
+        is Storage.Key.FloatKey -> floatPreferencesKey(key.name)
+        is Storage.Key.IntKey -> intPreferencesKey(key.name)
+        is Storage.Key.LongKey -> longPreferencesKey(key.name)
+        is Storage.Key.StringKey -> stringPreferencesKey(key.name)
+    } as Preferences.Key<T>
+}
