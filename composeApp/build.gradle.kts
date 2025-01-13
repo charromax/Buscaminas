@@ -49,6 +49,7 @@ kotlin {
 
             // Modules
             implementation(projects.ui.core)
+            implementation(projects.data.core)
             implementation(projects.feature.menu)
             implementation(projects.feature.settings)
             implementation(projects.feature.play)
@@ -57,6 +58,9 @@ kotlin {
             // Koin
             implementation(libs.koin.core)
             implementation(libs.bundles.koin.compose)
+
+            // Datastore
+            implementation(libs.datastore.preferences.core)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

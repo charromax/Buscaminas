@@ -33,6 +33,7 @@ kotlin {
             // Koin
             implementation(libs.koin.core)
             implementation(libs.bundles.koin.compose)
+            implementation(libs.bundles.kotlin)
         }
     }
 }

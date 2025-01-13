@@ -1,9 +1,7 @@
-package com.example.project.data.game
+package com.example.project.data.core.storage
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.example.project.data.core.storage.createDataStore
-import com.example.project.data.core.storage.dataStoreFileName
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager

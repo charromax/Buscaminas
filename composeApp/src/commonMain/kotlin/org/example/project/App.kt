@@ -8,6 +8,8 @@ import com.example.project.feature.highscore.HighScore
 import com.example.project.feature.highscore.highScoreRoutes
 import com.example.project.feature.menu.Menu
 import com.example.project.feature.menu.menuRoutes
+import com.example.project.settings.ui.Settings
+import com.example.project.settings.ui.settingsRoutes
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.core.module.Module
@@ -28,9 +30,9 @@ fun App(
             ) {
                 menuRoutes(goToPlay = { },
                     goToHighscore = { navController.navigate(HighScore) },
-                    goToSettings = { })
+                    goToSettings = { navController.navigate(Settings) })
                 highScoreRoutes()
-//                settingsRoutes()
+                settingsRoutes()
 //                playRoutes()
             }
         }

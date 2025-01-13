@@ -4,11 +4,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 class DataStoreStorage(
@@ -17,16 +19,19 @@ class DataStoreStorage(
     override fun <T> getAsFlow(key: Storage.Key<T>): Flow<T?> = dataStore
         .data
         .map { prefs ->
-            prefs[getDataStoreKey(key)]
+            prefs[getDataStoreKey(key)] ?: key.defaultValue
         }
 
 
-    override suspend fun <T> get(key: Storage.Key<T>): T? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun <T> get(key: Storage.Key<T>): T? =
+        getAsFlow(key).firstOrNull() ?: key.defaultValue
 
     override suspend fun <T> write(key: Storage.Key<T>, value: T?) {
-        TODO("Not yet implemented")
+        dataStore.edit { prefs ->
+            val dataStoreKey = getDataStoreKey(key)
+            if (value == null) prefs.remove(dataStoreKey) else
+                prefs[dataStoreKey] = value
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
