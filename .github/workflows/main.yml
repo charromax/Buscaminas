@@ -53,6 +53,9 @@ jobs:
           filename: "keystore"
           encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
+      - name: Set Gradle Properties for Android
+        run: echo "android.useAndroidX=true" >> gradle.properties
+
       - name: Build Android AAB
         run: ./gradlew composeApp:assembleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
@@ -99,7 +102,8 @@ jobs:
           java-version: 17
 
       - name: Build .msi
-        run: gradlew.bat composeApp:packageReleaseMsi
+        run: .\gradlew.bat composeApp:packageReleaseMsi
+        shell: cmd
 
       - name: Get Version Name
         id: get_version_name
@@ -138,8 +142,11 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x gradlew
 
+      - name: Set Gradle Properties for Android
+        run: echo "android.useAndroidX=true" >> gradle.properties
+
       - name: Build .dmg
-        run: ./gradlew composeApp:packageReleaseDmg
+        run: ./gradlew composeApp:packageReleaseDmg -Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas
 
       - name: Get Version Name
         id: get_version_name

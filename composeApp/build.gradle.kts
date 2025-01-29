@@ -33,11 +33,31 @@ kotlin {
     listOf(
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+        iosSimulatorArm64(),
+        macosX64(),
+        macosArm64()
+    ).forEach { target ->
+        target.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+        }
+    }
+
+    macosX64 {
+        binaries {
+            executable {
+                entryPoint = "main"
+                freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
+            }
+        }
+    }
+
+    macosArm64 {
+        binaries {
+            executable {
+                entryPoint = "main"
+                freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
+            }
         }
     }
 
