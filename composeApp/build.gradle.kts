@@ -123,7 +123,7 @@ compose.desktop {
             packageVersion = versionNameProp
             description = "Buscaminas by charr0max"
             copyright = "(C) 2025 charr0max"
-            licenseFile.set(project.file("../LICENSE.txt"))
+            licenseFile.set(project.file("../LICENSE"))
 
             macOS {
                 bundleID = "com.charr0max.buscaminas.Buscaminas"
