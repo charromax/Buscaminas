@@ -47,7 +47,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           filename: "keystore"
-          encodeString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
       - name: Build Android AAB
         run: ./gradlew composeApp:assembleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
