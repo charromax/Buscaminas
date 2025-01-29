@@ -40,7 +40,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.data.core"
+    namespace = "com.charr0max.buscaminas.data.core"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

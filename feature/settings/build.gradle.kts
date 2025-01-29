@@ -46,7 +46,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.feature.settings"
+    namespace = "com.charr0max.buscaminas.feature.settings"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

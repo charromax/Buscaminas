@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -41,12 +42,16 @@ kotlin {
 
             // Serialization
             implementation(libs.kotlinx.serialization)
+
+            // UI tests
+            implementation(kotlin("test"))
+
         }
     }
 }
 
 android {
-    namespace = "org.example.project.feature.play"
+    namespace = "com.charr0max.buscaminas.feature.play"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

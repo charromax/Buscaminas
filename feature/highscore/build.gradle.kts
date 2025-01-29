@@ -46,7 +46,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.feature.highscore"
+    namespace = "com.charr0max.buscaminas.feature.highscore"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

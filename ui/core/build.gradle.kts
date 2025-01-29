@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -44,6 +45,8 @@ kotlin {
             api(compose.ui)
             api(compose.components.resources)
             api(compose.components.uiToolingPreview)
+            @OptIn(ExperimentalComposeLibrary::class)
+            api(compose.uiTest)
         }
 
         desktopMain.dependencies {
@@ -54,7 +57,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.ui.core"
+    namespace = "org.charr0max.buscaminas.ui.core"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

@@ -38,7 +38,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.data.game"
+    namespace = "com.charr0max.buscaminas.data.game"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

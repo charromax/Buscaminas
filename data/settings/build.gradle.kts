@@ -39,7 +39,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.data.settings"
+    namespace = "com.charr0max.buscaminas.data.settings"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

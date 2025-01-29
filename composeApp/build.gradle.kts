@@ -1,6 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,6 +11,17 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
+val versionPropertiesInputStream = FileInputStream("${rootDir}/versions.properties")
+val versionProperties = Properties().apply {
+    load(versionPropertiesInputStream)
+}
+
+val versionCodeProp = versionProperties.getProperty("versionCode").toInt()
+val versionMajorProp = versionProperties.getProperty("versionMajor").toInt()
+val versionMinorProp = versionProperties.getProperty("versionMinor").toInt()
+val versionPatchProp = versionProperties.getProperty("versionPatch").toInt()
+
+val versionNameProp = "$versionMajorProp.$versionMinorProp.$versionPatchProp"
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -16,7 +29,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -27,7 +40,7 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     jvm("desktop")
 
     sourceSets {
@@ -70,15 +83,15 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project"
+    namespace = "com.charr0max.buscaminas"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "org.example.project"
+        applicationId = "com.charr0max.buscaminas"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = versionCodeProp
+        versionName = versionNameProp
     }
     packaging {
         resources {
@@ -102,12 +115,28 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "org.example.project.MainKt"
+        mainClass = "com.charr0max.buscaminas.MainKt"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.example.project"
-            packageVersion = "1.0.0"
+            packageName = "com.charr0max.buscaminas"
+            packageVersion = versionNameProp
+            description = "Buscaminas by charr0max"
+            copyright = "(C) 2025 charr0max"
+            licenseFile.set(project.file("../LICENSE.txt"))
+
+            macOS {
+                dockName = "Buscaminas"
+                entitlementsFile.set(project.file("defaults.entitlements"))
+            }
         }
+
+        buildTypes.release {
+            proguard {
+                obfuscate.set(true)
+                configurationFiles.from("proguard-rules.pro")
+            }
+        }
+
     }
 }

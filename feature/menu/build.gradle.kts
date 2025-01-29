@@ -62,7 +62,7 @@ kotlin {
 }
 
 android {
-    namespace = "org.example.project.feature.menu"
+    namespace = "com.charr0max.buscaminas.feature.menu"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
