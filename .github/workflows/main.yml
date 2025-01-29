@@ -27,7 +27,7 @@ jobs:
   build-android:
     permissions: write-all
     runs-on: ubuntu-latest
-    needs: create-release
+    needs: create_release
     steps:
       - uses: actions/checkout@v4
         with:
@@ -78,7 +78,7 @@ jobs:
   build-windows:
     permissions: write-all
     runs-on: windows-latest
-    needs: create-release
+    needs: create_release
     steps:
       - uses: actions/checkout@v4
         with:
@@ -114,7 +114,7 @@ jobs:
   build-macos:
     permissions: write-all
     runs-on: macos-latest
-    needs: create-release
+    needs: create_release
     steps:
       - uses: actions/checkout@v4
         with:
