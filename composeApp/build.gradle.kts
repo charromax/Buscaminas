@@ -119,7 +119,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.charr0max.buscaminas"
+            packageName = "Buscaminas"
             packageVersion = versionNameProp
             description = "Buscaminas by charr0max"
             copyright = "(C) 2025 charr0max"
