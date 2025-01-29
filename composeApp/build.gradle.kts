@@ -36,7 +36,9 @@ kotlin {
         target.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
+            if (target.konanTarget.family.isAppleFamily) { // ✅ Only apply to iOS
+                freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
+            }
         }
     }
 

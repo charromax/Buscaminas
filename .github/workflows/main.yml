@@ -52,7 +52,7 @@ jobs:
         run: echo "android.useAndroidX=true" >> gradle.properties
 
       - name: Build Android AAB
-        run: ./gradlew composeApp:bundleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: ./gradlew composeApp:buRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
       - name: Build Android APK
         run: ./gradlew composeApp:assembleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -66,6 +66,20 @@ jobs:
           asset_path: composeApp/build/outputs/bundle/release/composeApp-release.aab
           asset_name: buscaminas-${{ github.ref_name }}.aab
           asset_content_type: application/x-authorware-bin
+
+      - name: Sign APK
+        run: |
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore ${{ secrets.ANDROID_KEYSTORE_FILE }} \
+            -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
+            composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
+            ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+
+      - name: Verify APK Signature
+        run: jarsigner -verify -verbose -certs composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk
+
+      - name: Rename APK to Match Expected Name
+        run: mv composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk composeApp/build/outputs/apk/release/composeApp-release.apk
 
       - name: Upload Release APK Asset
         uses: actions/upload-release-asset@v1
