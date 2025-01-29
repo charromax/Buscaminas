@@ -43,24 +43,6 @@ kotlin {
         }
     }
 
-    macosX64 {
-        binaries {
-            executable {
-                entryPoint = "main"
-                freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
-            }
-        }
-    }
-
-    macosArm64 {
-        binaries {
-            executable {
-                entryPoint = "main"
-                freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
-            }
-        }
-    }
-
     jvm("desktop")
 
     sourceSets {
@@ -146,6 +128,7 @@ compose.desktop {
             licenseFile.set(project.file("../LICENSE.txt"))
 
             macOS {
+                bundleID = "com.charr0max.buscaminas.Buscaminas"
                 dockName = "Buscaminas"
                 entitlementsFile.set(project.file("defaults.entitlements"))
             }
