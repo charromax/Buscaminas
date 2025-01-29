@@ -24,7 +24,6 @@ val versionPatchProp = versionProperties.getProperty("versionPatch").toInt()
 val versionNameProp = "$versionMajorProp.$versionMinorProp.$versionPatchProp"
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -38,6 +37,7 @@ kotlin {
         target.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
         }
     }
 
@@ -89,10 +89,12 @@ android {
     defaultConfig {
         applicationId = "com.charr0max.buscaminas"
         minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = versionCodeProp
         versionName = versionNameProp
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
     }
+
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -103,9 +105,8 @@ android {
             isMinifyEnabled = false
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 

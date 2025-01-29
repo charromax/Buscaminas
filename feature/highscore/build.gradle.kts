@@ -51,6 +51,9 @@ android {
 
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+
+    }
+    testOptions {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
     }
     packaging {
@@ -63,8 +66,7 @@ android {
             isMinifyEnabled = false
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
