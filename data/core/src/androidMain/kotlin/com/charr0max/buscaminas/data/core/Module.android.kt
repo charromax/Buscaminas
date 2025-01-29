@@ -8,6 +8,6 @@ import org.koin.dsl.module
 
 internal actual val platformModule: Module = module {
     single<DataStore<Preferences>> {
-        createDataStore(get())
+        createDataStore(context = get())
     }
 }

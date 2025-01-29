@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.charr0max.buscaminas.data.game.createDataStore
+import com.charr0max.buscaminas.data.core.storage.createDataStore
 import org.koin.dsl.module
 
 class MainActivity : ComponentActivity() {
