@@ -156,12 +156,19 @@ jobs:
         shell: bash
         run: echo "version_name=$(./.github/scripts/get_version_name.sh versions.properties)" >> $GITHUB_OUTPUT
 
+      - name: Debug DMG Path
+        run: ls -la composeApp/build/compose/binaries/main-release/dmg/
+
+      - name: Find DMG File
+        id: find_dmg
+        run: echo "dmg_path=$(find composeApp/build/compose/binaries/main-release/dmg -name '*.dmg' | head -n 1)" >> $GITHUB_ENV
+
       - name: Upload Release DMG Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.create_release.outputs.output1 }}
-          asset_path: composeApp/build/compose/binaries/main-release/dmg/Buscaminas-${{ steps.get_version_name.outputs.version_name }}.dmg
+          asset_path: ${{ env.dmg_path }}
           asset_name: buscaminas-${{ github.ref_name }}.dmg
           asset_content_type: application/octet-stream
