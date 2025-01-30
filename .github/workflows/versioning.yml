@@ -33,6 +33,13 @@ jobs:
           echo "versionMinor=$MINOR" >> versions.properties
           echo "versionPatch=$PATCH" >> versions.properties
           echo "versionCode=$CODE" >> versions.properties
+          
+      - name: Debug Git Remote URL
+        run: git remote -v
+
+      - name: Debug GH_PAT
+        run:
+          echo "GH_PAT length: ${#GH_PAT}"
 
       - name: Commit and Push New Version
         run: |
@@ -41,13 +48,6 @@ jobs:
           git add versions.properties
           git commit -m "🚀 Bump version to $NEW_VERSION (Code: $NEW_CODE)"
 
-      - name: Debug Git Remote URL
-        run: git remote -v
-
-      - name: Debug GH_PAT
-        run:
-          echo "GH_PAT length: ${#GH_PAT}"
-          
       - name: Push Version Update
         run: |
           git config --global user.name "GitHub Actions"
