@@ -67,6 +67,9 @@ jobs:
           asset_name: buscaminas-${{ github.ref_name }}.aab
           asset_content_type: application/x-authorware-bin
 
+      - name: Set Signing Alias
+        run: echo "ANDROID_KEYSTORE_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" >> $GITHUB_ENV
+
       - name: Sign APK
         run: |
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
@@ -74,7 +77,7 @@ jobs:
             -storepass ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }} \
             -keypass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
             composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
-            ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+            "$ANDROID_KEYSTORE_ALIAS"
 
       - name: Verify APK Signature
         run: jarsigner -verify -verbose -certs composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk
