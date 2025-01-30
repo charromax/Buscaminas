@@ -7,5 +7,5 @@ interface UserNameRepository {
     val userName: Flow<String>
     suspend fun updateUserName(name: String)
 
-    data object UserNameKey: Storage.Key.StringKey("username", "culo")
+    data object UserNameKey: Storage.Key.StringKey("username", "CULENGUE")
 }
