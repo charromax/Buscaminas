@@ -98,9 +98,39 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    signingConfigs {
+        signingConfigs {
+            create("release") {
+                val props = Properties()
+                val localProperties = rootProject.file("local.properties")
+
+                if (localProperties.exists()) {
+                    props.load(FileInputStream(localProperties))
+
+                    val storeFilePath = props.getProperty("storeFile")
+                    val storePassword = props.getProperty("storePassword")
+                    val keyAlias = props.getProperty("keyAlias")
+                    val keyPassword = props.getProperty("keyPassword")
+
+                    if (!storeFilePath.isNullOrBlank() && !storePassword.isNullOrBlank() && !keyAlias.isNullOrBlank() && !keyPassword.isNullOrBlank()) {
+                        storeFile = rootProject.file(storeFilePath)
+                        this.storePassword = storePassword
+                        this.keyAlias = keyAlias
+                        this.keyPassword = keyPassword
+                    } else {
+                        println("⚠️ Signing properties are missing in local.properties. Skipping release signing.")
+                    }
+                } else {
+                    println("⚠️ local.properties not found. Skipping release signing.")
+                }
+            }
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     java {
