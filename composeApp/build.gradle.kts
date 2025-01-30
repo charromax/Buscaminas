@@ -36,9 +36,6 @@ kotlin {
         target.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            if (target.konanTarget.family == org.jetbrains.kotlin.konan.target.Family.IOS) { // ✅ Only apply to iOS
-                freeCompilerArgs += "-Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas"
-            }
         }
     }
 

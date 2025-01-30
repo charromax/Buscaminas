@@ -71,8 +71,8 @@ jobs:
         run: |
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore ${{ secrets.ANDROID_KEYSTORE_FILE }} \
-            -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
-            -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} \
+            -storepass ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }} \
+            -keypass ${{ ANDROID_KEYSTORE_PASSWORD }} \
             composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
             "$ANDROID_KEYSTORE_ALIAS"
         env:
