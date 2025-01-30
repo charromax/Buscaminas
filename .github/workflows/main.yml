@@ -67,20 +67,14 @@ jobs:
           asset_name: buscaminas-${{ github.ref_name }}.aab
           asset_content_type: application/x-authorware-bin
 
-      - name: Set Signing Alias
-        run: echo "ANDROID_KS_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" | tr -d '\n' >> $GITHUB_ENV
-
       - name: Sign APK
-        run: |
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-            -keystore ${{ secrets.ANDROID_KEYSTORE_FILE }} \
-            -storepass ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }} \
-            -keypass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
-            composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
-            "$ANDROID_KS_ALIAS"
-
-      - name: Verify APK Signature
-        run: jarsigner -verify -verbose -certs composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          alias: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
       - name: Rename APK to Match Expected Name
         run: mv composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk composeApp/build/outputs/apk/release/composeApp-release.apk
