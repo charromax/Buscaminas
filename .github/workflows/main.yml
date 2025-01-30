@@ -67,28 +67,6 @@ jobs:
           asset_name: buscaminas-${{ github.ref_name }}.aab
           asset_content_type: application/x-authorware-bin
 
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: composeApp/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          alias: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-
-      - name: Rename APK to Match Expected Name
-        run: mv composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk composeApp/build/outputs/apk/release/composeApp-release.apk
-
-      - name: Upload Release APK Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create_release.outputs.output1 }}
-          asset_path: composeApp/build/outputs/apk/release/composeApp-release.apk
-          asset_name: buscaminas-${{ github.ref_name }}.apk
-          asset_content_type: application/vnd.android.package-archive
-
   build-windows:
     permissions: write-all
     runs-on: windows-latest
