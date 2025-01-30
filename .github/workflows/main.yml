@@ -72,8 +72,11 @@ jobs:
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore ${{ secrets.ANDROID_KEYSTORE_FILE }} \
             -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
+            -keypass ${{ secrets.ANDROID_KEY_PASSWORD }} \
             composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
-            ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+            "$ANDROID_KEYSTORE_ALIAS"
+        env:
+          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
 
       - name: Verify APK Signature
         run: jarsigner -verify -verbose -certs composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk
