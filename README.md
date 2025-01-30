@@ -24,6 +24,7 @@ The app is divided into modules to promote separation of concerns:
 - **Database**: Room and SQLite.
 - **State Management**: Jetpack Compose and AndroidX Lifecycle.
 - **Testing**: MockK and Kotest.
+- **CI/CD** pipeline through Github Actions with on-demand local.properties from secrets for secure Keystore storage
 
 ## Screenshots
 <img width="333" alt="image" src="https://github.com/user-attachments/assets/955eb915-2628-4352-812c-af36189c2c96" />
