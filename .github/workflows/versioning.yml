@@ -8,7 +8,7 @@ on:
 
 jobs:
   versioning:
-    if: github.event.pull_request.merged == true && github.base_ref == 'master'
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true && github.base_ref == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -34,6 +34,9 @@ jobs:
           echo "versionMinor=$MINOR" >> versions.properties
           echo "versionPatch=$PATCH" >> versions.properties
           echo "versionCode=$CODE" >> versions.properties
+
+      - name: Debug Git Remote URL
+        run: git remote -v
 
       - name: Commit and Push New Version
         run: |
