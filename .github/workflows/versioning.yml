@@ -4,10 +4,11 @@ on:
   pull_request:
     types:
       - closed
+  workflow_dispatch:
 
 jobs:
   versioning:
-    if: github.event.pull_request.merged == true && github.base_ref == 'master'
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true && github.base_ref == 'master'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -34,17 +35,24 @@ jobs:
           echo "versionPatch=$PATCH" >> versions.properties
           echo "versionCode=$CODE" >> versions.properties
 
+      - name: Debug Git Remote URL
+        run: git remote -v
+
       - name: Commit and Push New Version
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add versions.properties
           git commit -m "🚀 Bump version to $NEW_VERSION (Code: $NEW_CODE)"
-          
+
       - name: Push Version Update
         run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
-          git push origin HEAD:master
+
+          git push origin master
 
       - name: Create Git Tag
         run: |
