@@ -49,10 +49,10 @@ jobs:
           encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
       - name: Build Android AAB
-        run: ./gradlew composeApp:bundleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: ./gradlew composeApp:assembleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
       - name: Build Android APK
-        run: ./gradlew composeApp:assembleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: ./gradlew composeApp:bundleRelease -Pandroid.injected.signin.store.file=${{ steps.decode_keystore.outputs.filePath }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }} -Pandroid.injected.signin.store.alias=${{ secrets.ANDROID_KEYSTORE_ALIAS }} -Pandroid.injected.signin.store.password=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
 
       - name: Upload Release AAB Asset
         uses: actions/upload-release-asset@v1
