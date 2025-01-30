@@ -2,8 +2,6 @@ name: Build and Create Releases
 
 on:
   push:
-    branches:
-      - master
     tags:
       - v*
   workflow_dispatch:
