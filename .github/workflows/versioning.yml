@@ -5,7 +5,7 @@ on:
     types:
       - closed
   workflow_dispatch:
-    
+
 jobs:
   versioning:
     if: github.event.pull_request.merged == true && github.base_ref == 'master'
@@ -37,10 +37,6 @@ jobs:
 
       - name: Debug Git Remote URL
         run: git remote -v
-
-      - name: Debug GH_PAT
-        run:
-          echo "GH_PAT length: ${#GH_PAT}"
 
       - name: Commit and Push New Version
         run: |
