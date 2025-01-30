@@ -4,7 +4,8 @@ on:
   pull_request:
     types:
       - closed
-
+  workflow_dispatch:
+    
 jobs:
   versioning:
     if: github.event.pull_request.merged == true && github.base_ref == 'master'
@@ -33,7 +34,7 @@ jobs:
           echo "versionMinor=$MINOR" >> versions.properties
           echo "versionPatch=$PATCH" >> versions.properties
           echo "versionCode=$CODE" >> versions.properties
-          
+
       - name: Debug Git Remote URL
         run: git remote -v
 
