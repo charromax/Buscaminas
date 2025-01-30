@@ -68,7 +68,7 @@ jobs:
           asset_content_type: application/x-authorware-bin
 
       - name: Set Signing Alias
-        run: echo "ANDROID_KS_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" >> $GITHUB_ENV
+        run: echo "ANDROID_KS_ALIAS=${{ secrets.ANDROID_KEYSTORE_ALIAS }}" | tr -d '\n' >> $GITHUB_ENV
 
       - name: Sign APK
         run: |
