@@ -74,9 +74,7 @@ jobs:
             -storepass ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }} \
             -keypass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }} \
             composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk \
-            "$ANDROID_KEYSTORE_ALIAS"
-        env:
-          ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+            ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
 
       - name: Verify APK Signature
         run: jarsigner -verify -verbose -certs composeApp/build/outputs/apk/release/composeApp-release-unsigned.apk
@@ -148,7 +146,7 @@ jobs:
         run: echo "android.useAndroidX=true" >> gradle.properties
 
       - name: Build .dmg
-        run: ./gradlew composeApp:packageReleaseDmg -Xbinary=bundleId=com.charr0max.buscaminas.Buscaminas
+        run: ./gradlew composeApp:packageReleaseDmg
 
       - name: Get Version Name
         id: get_version_name
