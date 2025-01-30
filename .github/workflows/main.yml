@@ -2,6 +2,8 @@ name: Build and Create Releases
 
 on:
   push:
+    branches:
+      - master
     tags:
       - v*
   workflow_dispatch:
@@ -13,10 +15,6 @@ jobs:
     outputs:
       output1: ${{ steps.create_release.outputs.upload_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
