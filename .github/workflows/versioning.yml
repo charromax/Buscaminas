@@ -43,14 +43,14 @@ jobs:
           git commit -m "🚀 Bump version to $NEW_VERSION"
           git push origin master
 
-      - name: Create Git Tag
+      - name: Push Version Tag
         run: |
           git tag v$NEW_VERSION
           git push origin v$NEW_VERSION
 
-      - name: Trigger Build & Release Pipeline
+      - name: Manually Trigger Build & Release Pipeline
         run: |
-          curl -X POST -u "x-access-token:${{ secrets.GITHUB_TOKEN }}" \
+          curl -X POST -u "x-access-token:${{ secrets.GH_PAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
           "https://api.github.com/repos/${{ github.repository }}/actions/workflows/main.yml/dispatches" \
-          -d '{"ref": "master"}'  
+          -d '{"ref": "refs/tags/v'"$NEW_VERSION"'"}'
